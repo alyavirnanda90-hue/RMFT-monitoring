@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Wilayah</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ffffff, #e6f2ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 102, 204, 0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeInUp 1s ease-in-out;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      color: #004a99;
+    }
+
+    .login-container label {
+      display: block;
+      text-align: left;
+      font-weight: 600;
+      margin: 10px 0 5px;
+      color: #333;
+    }
+
+    select,
+    input[type="text"] {
+      width: 100%;
+      max-width: 320px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    select:focus,
+    input[type="text"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+      outline: none;
+      transform: scale(1.02);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #007bff, #004a99);
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzjt2prVgeHkfIkXZDTb-pCqmi2jeStZ_Bsi9sfZSNOYvMwN76gy0qFDf0wI6OwrvLA/exec";
+
+    async function loadWilayah() {
+      try {
+        const res = await fetch(`${scriptURL}?action=getWilayah`);
+        const data = await res.json();
+
+        let dropdown = document.getElementById("wilayah");
+        dropdown.innerHTML = "<option value=''>-- Pilih Wilayah --</option>";
+        data.forEach(w => {
+          let opt = document.createElement("option");
+          opt.value = w;
+          opt.textContent = w;
+          dropdown.appendChild(opt);
+        });
+      } catch (err) {
+        console.error("Error loadWilayah:", err);
+        alert("Gagal ambil data wilayah. Periksa URL Web App.");
+      }
+    }
+
+    async function login() {
+      const wilayah = document.getElementById("wilayah").value;
+      const kodeBAM = document.getElementById("kodeBAM").value;
+
+      if (!wilayah || !kodeBAM) {
+        document.getElementById("status").innerText = "Isi semua field!";
+        document.getElementById("status").style.color = "red";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${scriptURL}?action=login&wilayah=${encodeURIComponent(wilayah)}&kodeBAM=${encodeURIComponent(kodeBAM)}`);
+        const result = await res.json();
+
+        let statusEl = document.getElementById("status");
+        statusEl.innerText = result.message;
+        statusEl.style.color = (result.status === "success") ? "green" : "red";
+
+        if (result.status === "success") {
+          localStorage.setItem("wilayah", wilayah);
+          localStorage.setItem("kodeBAM", kodeBAM);
+          window.location.href = "pilih kc canggih.html";
+        }
+
+      } catch (err) {
+        console.error("Error login:", err);
+        alert("Gagal koneksi ke server.");
+      }
+    }
+  </script>
+</head>
+<body onload="loadWilayah()">
+  <div class="login-container">
+    <h2>Form Login Wilayah</h2>
+
+    <label for="wilayah">Pilih Wilayah:</label>
+    <select id="wilayah"></select>
+
+    <label for="kodeBAM">Kode BAM:</label>
+    <input type="text" id="kodeBAM" placeholder="Masukkan kode BAM">
+
+    <button onclick="login()">Login</button>
+    <p id="status"></p>
+  </div>
+</body>
+</html>
