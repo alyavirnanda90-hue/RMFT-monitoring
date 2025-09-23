@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pilih KC, BFA, dan RM</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #ffffff, #f5f9ff);
+      color: #1a1a1a;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 26px;
+      color: #0066AE;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px rgba(0, 102, 174, 0.2);
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeSlideDown 0.8s ease forwards 0.3s;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+      opacity: 0;
+      transform: translateX(-15px);
+      animation: fadeSlideRight 0.6s ease forwards;
+      text-align: left;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1px solid #dce3eb;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      transition: 0.3s ease;
+      background: #ffffff;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    select:focus, input:focus {
+      border-color: #0066AE;
+      box-shadow: 0 0 10px rgba(0, 102, 174, 0.3);
+    }
+
+    input[readonly] {
+      background: #f3f7fb;
+      color: #555;
+      width: 95%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1px solid #dce3eb;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      transition: 0.3s ease;
+      box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: bold;
+      background: #0066AE;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0, 102, 174, 0.3);
+      opacity: 0;
+      transform: scale(0.9);
+      animation: fadeZoom 0.6s ease forwards;
+    }
+
+    button:hover {
+      background: #00508a;
+      box-shadow: 0 6px 16px rgba(0, 102, 174, 0.45);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    #submitStatus {
+      margin-top: 15px;
+      font-weight: bold;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1.2s;
+    }
+
+    .form-container {
+      width: 100%;
+      max-width: 500px;
+      background: #ffffffd9;
+      padding: 30px 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08),
+                  0 0 12px rgba(0, 102, 174, 0.1);
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeSlideUp 0.9s ease forwards;
+    }
+
+form input[type="text"],
+form input[type="number"],
+form input[type="date"],
+form select {
+  width: 100%;          /* semua input & select akan full sesuai form */
+  max-width: 350px;     /* samakan panjang maksimal */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box; /* biar padding ikut dihitung */
+}
+
+/* pastikan readonly juga ikut aturan yang sama */
+form input[readonly] {
+  background-color: #f9f9f9; /* kasih beda warna tipis */
+  color: #555;
+}
+
+
+    /* === Animations === */
+    @keyframes fadeSlideUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeSlideDown { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeSlideRight { to { opacity: 1; transform: translateX(0); } }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeZoom { to { opacity: 1; transform: scale(1); } }
+
+    /* Animasi berurutan */
+    label:nth-of-type(1) { animation-delay: 0.4s; }
+    select:nth-of-type(1) { animation-delay: 0.5s; }
+    label:nth-of-type(2) { animation-delay: 0.6s; }
+    input:nth-of-type(1) { animation-delay: 0.7s; }
+    label:nth-of-type(3) { animation-delay: 0.8s; }
+    select:nth-of-type(2) { animation-delay: 0.9s; }
+    label:nth-of-type(4) { animation-delay: 1.0s; }
+    input:nth-of-type(2) { animation-delay: 1.1s; }
+    label:nth-of-type(5) { animation-delay: 1.2s; }
+    select:nth-of-type(3) { animation-delay: 1.3s; }
+    label:nth-of-type(6) { animation-delay: 1.4s; }
+    input:nth-of-type(3) { animation-delay: 1.5s; }
+    .button-group button:nth-of-type(1) { animation-delay: 1.6s; }
+    .button-group button:nth-of-type(2) { animation-delay: 1.8s; }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Pilih KC, BFA, dan RM</h2>
+
+    <label for="kcDropdown">Pilih KC:</label>
+    <select id="kcDropdown" onchange="pilihKC()"></select>
+
+    <label for="kodeKC">Kode KC:</label>
+    <input type="text" id="kodeKC" readonly>
+
+    <label for="bfaDropdown">Pilih Nama BFA:</label>
+    <select id="bfaDropdown" onchange="pilihBFA()"></select>
+
+    <label for="kodeBFA">Kode BFA:</label>
+    <input type="text" id="kodeBFA" readonly>
+
+    <label for="rmDropdown">Pilih Nama RMFT:</label>
+    <select id="rmDropdown" onchange="pilihRM()"></select>
+
+    <label for="kodeRM">Kode RMFT:</label>
+    <input type="text" id="kodeRM" readonly>
+
+    <!-- Tombol sejajar tengah -->
+    <div class="button-group">
+      <button onclick="submitForm()">Submit</button>
+      <button onclick="goToTabelHasil()">Lihat Tabel Hasil</button>
+    </div>
+
+    <p id="submitStatus"></p>
+  </div>
+
+  <script>
+    function goToTabelHasil() {
+      window.location.href = "Tabel Hasil - Copy.html";
+    }
+  </script>
+
+  <!-- Script fungsi tetap sama (tidak diubah) -->
+  <script>
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxG0A0keT3DJd6AiKnLmP09uGVT_DZaJJw52tzjd3qmyogSN-32SDHmp-055QBTRgnx/exec";
+    const kodeBAM = localStorage.getItem("kodeBAM");
+
+    function getStoredNamaBAM() {
+      return localStorage.getItem("namaBAM") || localStorage.getItem("wilayah") || "";
+    }
+
+    async function loadKC() {
+      try {
+        const res = await fetch(`${scriptURL}?action=getKC&kodeBAM=${encodeURIComponent(kodeBAM)}`);
+        const data = await res.json();
+        const dropdown = document.getElementById("kcDropdown");
+        dropdown.innerHTML = "<option value=''>-- Pilih KC --</option>";
+        data.forEach(item => {
+          const opt = document.createElement("option");
+          opt.value = item.namaKC;
+          opt.textContent = item.namaKC;
+          opt.setAttribute("data-kodekc", item.kodeKC);
+          dropdown.appendChild(opt);
+        });
+      } catch (err) {
+        console.error("loadKC error:", err);
+        alert("Gagal ambil KC. Cek console.");
+      }
+    }
+
+    function pilihKC() {
+      const dropdown = document.getElementById("kcDropdown");
+      const namaKC = dropdown.value;
+      const kodeKC = dropdown.options[dropdown.selectedIndex].getAttribute("data-kodekc") || "";
+      document.getElementById("kodeKC").value = kodeKC;
+      localStorage.setItem("namaKC", namaKC);
+      localStorage.setItem("kodeKC", kodeKC);
+      if (namaKC) loadRM(namaKC);
+      else {
+        document.getElementById("rmDropdown").innerHTML = "<option value=''>-- Pilih Nama RM --</option>";
+        document.getElementById("kodeRM").value = "";
+      }
+    }
+
+    async function loadBFA() {
+      try {
+        const res = await fetch(`${scriptURL}?action=getBFA&kodeBAM=${encodeURIComponent(kodeBAM)}`);
+        const data = await res.json();
+        const dropdown = document.getElementById("bfaDropdown");
+        dropdown.innerHTML = "<option value=''>-- Pilih Nama BFA --</option>";
+        data.forEach(item => {
+          const opt = document.createElement("option");
+          opt.value = item.namaBFA;
+          opt.textContent = item.namaBFA;
+          opt.setAttribute("data-kodebfa", item.kodeBFA);
+          dropdown.appendChild(opt);
+        });
+      } catch (err) {
+        console.error("loadBFA error:", err);
+        alert("Gagal ambil BFA. Cek console.");
+      }
+    }
+
+    function pilihBFA() {
+      const dropdown = document.getElementById("bfaDropdown");
+      const namaBFA = dropdown.value;
+      const kodeBFA = dropdown.options[dropdown.selectedIndex].getAttribute("data-kodebfa") || "";
+      document.getElementById("kodeBFA").value = kodeBFA;
+      localStorage.setItem("namaBFA", namaBFA);
+      localStorage.setItem("kodeBFA", kodeBFA);
+    }
+
+    async function loadRM(namaKC) {
+      try {
+        const res = await fetch(`${scriptURL}?action=getRM&namaKC=${encodeURIComponent(namaKC)}`);
+        const data = await res.json();
+        const dropdown = document.getElementById("rmDropdown");
+        dropdown.innerHTML = "<option value=''>-- Pilih Nama RM --</option>";
+        data.forEach(rm => {
+          const opt = document.createElement("option");
+          opt.value = rm.namaRM;
+          opt.textContent = rm.namaRM;
+          opt.setAttribute("data-koderm", rm.kodeRM);
+          dropdown.appendChild(opt);
+        });
+        document.getElementById("kodeRM").value = "";
+      } catch (err) {
+        console.error("loadRM error:", err);
+        alert("Gagal ambil RM. Cek console.");
+      }
+    }
+
+    function pilihRM() {
+      const dropdown = document.getElementById("rmDropdown");
+      const kodeRM = dropdown.options[dropdown.selectedIndex].getAttribute("data-koderm") || "";
+      document.getElementById("kodeRM").value = kodeRM;
+      localStorage.setItem("kodeRM", kodeRM);
+    }
+
+    async function submitForm() {
+      const kodeKC = document.getElementById("kodeKC").value.trim();
+      const namaKC = document.getElementById("kcDropdown").value.trim();
+      const kodeBAM_local = kodeBAM || "";
+      const namaBAM_local = getStoredNamaBAM();
+      const kodeBFA = document.getElementById("kodeBFA").value.trim();
+      const namaBFA = document.getElementById("bfaDropdown").value.trim();
+      const kodeRM = document.getElementById("kodeRM").value.trim();
+      const namaRM = document.getElementById("rmDropdown").value.trim();
+
+      if (!kodeKC || !namaKC || !kodeBAM_local || !namaBAM_local || !kodeBFA || !namaBFA || !kodeRM || !namaRM) {
+        document.getElementById("submitStatus").innerText = "Lengkapi semua field dulu!";
+        document.getElementById("submitStatus").style.color = "red";
+        return;
+      }
+
+      try {
+        const url = `${scriptURL}?action=submitData&kodeKC=${encodeURIComponent(kodeKC)}&namaKC=${encodeURIComponent(namaKC)}&kodeBAM=${encodeURIComponent(kodeBAM_local)}&namaBAM=${encodeURIComponent(namaBAM_local)}&kodeBFA=${encodeURIComponent(kodeBFA)}&namaBFA=${encodeURIComponent(namaBFA)}&kodeRM=${encodeURIComponent(kodeRM)}&namaRM=${encodeURIComponent(namaRM)}`;
+        const res = await fetch(url);
+        const result = await res.json();
+
+        document.getElementById("submitStatus").innerText = result.message || JSON.stringify(result);
+        document.getElementById("submitStatus").style.color = result.status === "success" ? "green" : "red";
+      } catch (err) {
+        console.error("Error submit:", err);
+        document.getElementById("submitStatus").innerText = "Gagal kirim data ke server.";
+        document.getElementById("submitStatus").style.color = "red";
+      }
+    }
+
+    window.onload = function() {
+      if (!kodeBAM) {
+        alert("Kode BAM tidak ditemukan di localStorage. Pastikan sudah login.");
+      }
+      loadKC();
+      loadBFA();
+    };
+  </script>
+</body>
+</html>
