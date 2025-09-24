@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Pilih KC, BFA, dan RM</title>
+  <title>Pilih KC, RM, dan BFA</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -182,17 +182,17 @@ form input[readonly] {
     <label for="kodeKC">Kode KC:</label>
     <input type="text" id="kodeKC" readonly>
 
-    <label for="bfaDropdown">Pilih Nama BFA:</label>
-    <select id="bfaDropdown" onchange="pilihBFA()"></select>
-
-    <label for="kodeBFA">Kode BFA:</label>
-    <input type="text" id="kodeBFA" readonly>
-
     <label for="rmDropdown">Pilih Nama RMFT:</label>
     <select id="rmDropdown" onchange="pilihRM()"></select>
 
     <label for="kodeRM">Kode RMFT:</label>
     <input type="text" id="kodeRM" readonly>
+
+    <label for="bfaDropdown">Pilih Nama BFA:</label>
+    <select id="bfaDropdown" onchange="pilihBFA()"></select>
+
+    <label for="kodeBFA">Kode BFA:</label>
+    <input type="text" id="kodeBFA" readonly>
 
     <!-- Tombol sejajar tengah -->
     <div class="button-group">
@@ -346,3 +346,4 @@ form input[readonly] {
   </script>
 </body>
 </html>
+
